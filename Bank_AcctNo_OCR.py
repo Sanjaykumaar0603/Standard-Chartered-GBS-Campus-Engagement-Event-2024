@@ -2,13 +2,38 @@ from PIL import Image, ImageDraw
 import os
 import pytesseract
 import re
+import random
+import faker
+import mysql.connector
+
+# Connect to MySQL database
+connection = mysql.connector.connect(
+    host='localhost',
+    user='root',
+    password='root',
+    database='sch'
+)
+
+fake = faker.Faker()
+cursor = connection.cursor()
+directory = "Images/"
+
+def read_coordinates(file_path):
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+    coordinates = []
+    for line in lines:
+        parts = line.strip().split()
+        x, y, w, h = map(float, parts[1:])
+        coordinates.append((x, y, w, h))
+    return coordinates
 
 # Initialize variables to store OCR outputs
 ocr_output_class_1 = ""
 ocr_output_class_3 = ""
-directory = "Images/"
 
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+
 
 # Loop through all files in the directory
 for filename in os.listdir(directory):
@@ -97,7 +122,7 @@ for filename in os.listdir(directory):
 
                 elif class_id == 3:
                     ocr_output_class_3 = ocr_output
-                    # Define a regex pattern to match numerical data
+                    # # Define a regex pattern to match numerical data
                     pattern = r'\d+'
                     # Find all numerical matches in the OCR output
                     numerical_data = re.findall(pattern, ocr_output_class_3)
@@ -106,6 +131,20 @@ for filename in os.listdir(directory):
                     account_number = ''.join(numerical_data)
                     if len(account_number)>8:
                         print(filename, "Class_3:", account_number)
+                        # Generate a random name
+                        name = fake.name()
+                        # Generate a random amount
+                        amount = round(random.uniform(100, 10000), 2)
+                        # Generate a random PAN number
+                        pan = ''.join(random.choices('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', k=10))
+                        # SQL query to insert data into the customer table
+                        insert_query = "INSERT INTO customer (account_number, name, amount, PAN) VALUES (%s, %s, %s, %s)"
+                        data = (account_number, name, amount, pan)
+
+                        # Execute the SQL query
+                        cursor.execute(insert_query, data)
+
+                        
                     else:
                         print(filename, "Class_3:", "Invalid account number")
         print("\n")
