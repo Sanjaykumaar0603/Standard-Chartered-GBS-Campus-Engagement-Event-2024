@@ -6,6 +6,7 @@ import re
 # Initialize variables to store OCR outputs
 ocr_output_class_1 = ""
 ocr_output_class_3 = ""
+directory = "Images/"
 
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
