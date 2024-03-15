@@ -32,18 +32,18 @@ We are able to process multi lingual languages like hindi, english, tamil, etc u
 
 ## Dependencies 
 pip install the following modules:
-    1. os
-    2. pytesseract
-    3. re
-    4. random
-    5. cv2
-    6. easyocr
-    7. ssl
-    8. mysql.connector
-    9. numpy
-    10. cosine_similarity
-    11. face_recognition
-    12. sklearn
+1. os
+2. pytesseract
+3. re
+4. random
+5. cv2
+6. easyocr
+7. ssl
+8. mysql.connector
+9. numpy
+10. cosine_similarity
+11. face_recognition
+12. sklearn
 
 ## Dataset
 Retrieved dataset from kaggle.
