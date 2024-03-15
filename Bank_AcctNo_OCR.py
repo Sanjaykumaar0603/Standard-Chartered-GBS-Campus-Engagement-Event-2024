@@ -3,20 +3,14 @@ import os
 import pytesseract
 import re
 import random
-# import faker
-# import mysql.connector
+import cv2
+import easyocr
 
-# Connect to MySQL database
-# connection = mysql.connector.connect(
-#     host='localhost',
-#     user='root',
-#     password='root',
-#     database='sch'
-# )
+# Load the pre-trained OCR reader
+reader = easyocr.Reader(['en'])
 
-# fake = faker.Faker()
-# cursor = connection.cursor()
-directory = "Images/"
+directory = r"C:\Users\preet\Desktop\Standard-Chartered-GBS-Campus-Engagement-Event-2024-main (1)\Standard-Chartered-GBS-Campus-Engagement-Event-2024-main\Images"
+
 
 def read_coordinates(file_path):
     with open(file_path, 'r') as file:
@@ -28,12 +22,17 @@ def read_coordinates(file_path):
         coordinates.append((x, y, w, h))
     return coordinates
 
+
+# Function to check if name contains any numbers or special characters
+def contains_numbers_or_special_characters(string):
+    return any(char.isdigit() or not char.isalnum() for char in string)
+
+
 # Initialize variables to store OCR outputs
 ocr_output_class_1 = ""
 ocr_output_class_3 = ""
 
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
-
 
 # Loop through all files in the directory
 for filename in os.listdir(directory):
@@ -41,12 +40,12 @@ for filename in os.listdir(directory):
         index = 0
         image_path = os.path.join(directory, filename)
         txt_path = os.path.join(directory, filename[:-4] + ".txt")
-        
+
         # Check if the corresponding txt file exists
         if not os.path.exists(txt_path):
             print(f"Corresponding txt file not found for {filename}")
             continue
-        
+
         # Load the image
         image = Image.open(image_path)
 
@@ -59,7 +58,7 @@ for filename in os.listdir(directory):
 
         # Run OCR on images labeled '3' and '1' in each folder
         for class_id, coords in enumerate(coordinates):
-            if class_id in [1, 3]:
+            if class_id in [1, 2, 3]:
                 # Crop the partition from the image
                 x, y, w, h = coords
                 width, height = image.size
@@ -68,34 +67,20 @@ for filename in os.listdir(directory):
                 right = int((x + w) * width)
                 bottom = int((y + h) * height)
                 partition = image.crop((left, top, right, bottom))
-                
+
                 # Perform OCR
                 ocr_output = pytesseract.image_to_string(partition)
-                
-                # Print OCR output
-                # print(f"OCR Output for {filename}_{class_id}.jpg:")
-                # print(ocr_output)
 
                 # Store OCR outputs in separate variables based on class ID
                 if class_id == 1:
-                    image_path = r"C:\Users\S Karun Vikhash\Downloads\SCHack\self\Images\{}\{}_{}.jpg".format(filename[:-4], class_id, index)
-                    # ocr_output_class_1 = ocr_output
-                    # print(filename, "Class_1: ", ocr_output_class_1)
-                    # Define languages
+                    image_path = r"C:\Users\preet\Desktop\new\Standard-Chartered-GBS-Campus-Engagement-Event-2024-main\Images\{}\{}_{}.jpg".format(
+                        filename[:-4], class_id, index)
                     languages = ['hin', 'eng']
-
-                    # Initialize confidence scores for each language
                     language_lines = {lang: {'text': '', 'confidence': 0} for lang in languages}
-
-                    # Iterate over languages
                     for lang in languages:
-                        # Perform OCR for each language
                         text = pytesseract.image_to_string(Image.open(image_path), lang=lang)
-                        # Calculate confidence score (average confidence of all words)
                         word_confidences = pytesseract.image_to_data(Image.open(image_path), lang=lang)
-                        # Split the output into lines and skip the header
                         lines = word_confidences.splitlines()[1:]
-                        # Extract the confidence scores and convert them to floats
                         confidence_values = []
                         for line in lines:
                             components = line.split('\t')
@@ -104,48 +89,51 @@ for filename in os.listdir(directory):
                                     confidence_values.append(float(components[-1]))
                                 except ValueError:
                                     pass
-                        # Calculate the average confidence score
                         avg_confidence = sum(confidence_values) / len(confidence_values) if confidence_values else 0
-                        # Update the language lines if the confidence score is higher
                         if avg_confidence > language_lines[lang]['confidence']:
                             language_lines[lang]['text'] = text
                             language_lines[lang]['confidence'] = avg_confidence
-
-                    # Check if Hindi has the highest confidence score
-                    if language_lines['hin']['confidence'] > language_lines['eng']['confidence']:
-                        print("Hindi Text:")
-                        print(language_lines['hin']['text'].split("\n")[0])
-                        print(language_lines['eng']['text'].split("\n")[1])
+                elif class_id == 2:
+                    image_path = r"C:\Users\preet\Desktop\new\Standard-Chartered-GBS-Campus-Engagement-Event-2024-main\Images\{}\{}_{}.jpg".format(
+                        filename[:-4], class_id, index)
+                    if os.path.isfile(image_path):
+                        image1 = cv2.imread(image_path)
+                        gray = cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
+                        result = reader.readtext(gray, detail=0, paragraph=False)
+                        print("Detected text in", os.path.join(filename, "2_0.jpg") + ":")
+                        for text in result:
+                            print(text)
                     else:
-                        print("English Text:")
-                        print(language_lines['eng']['text'])
-
+                        print("2_0.jpg not found in", filename)
                 elif class_id == 3:
                     ocr_output_class_3 = ocr_output
-                    # # Define a regex pattern to match numerical data
                     pattern = r'\d+'
-                    # Find all numerical matches in the OCR output
                     numerical_data = re.findall(pattern, ocr_output_class_3)
-
-                    # Remove whitespace and join the numerical data
                     account_number = ''.join(numerical_data)
-                    if len(account_number)>8:
-                        print(filename, "Class_3:", account_number)
-                        # Generate a random name
-                        # name = fake.name()
-                        # # Generate a random amount
-                        # amount = round(random.uniform(100, 10000), 2)
-                        # # Generate a random PAN number
-                        # pan = ''.join(random.choices('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', k=10))
-                        # # SQL query to insert data into the customer table
-                        # insert_query = "INSERT INTO customer (account_number, name, amount, PAN) VALUES (%s, %s, %s, %s)"
-                        # data = (account_number, name, amount, pan)
+                    if len(account_number) > 8:
+                        # Placeholder for name since faker module is not used
+                        name = "John$%Doe"  # Example name containing special characters
+                        # Check if name contains any numbers or special characters
+                        if contains_numbers_or_special_characters(name):
+                            count = sum(1 for char in name if char.isdigit() or not char.isalnum())
+                            # Check if count exceeds the threshold
+                            if count > 2:
+                                print(filename, "Class_3: Invalid Cheque")
+                            elif count > 0:
+                                print(filename, "Class_3: Check Manually")
+                        else:
+                            # Generate a random amount
+                            amount = round(random.uniform(100, 10000), 2)
+                            # Generate a random PAN number
+                            pan = ''.join(random.choices('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', k=10))
+                            # SQL query to insert data into the customer table
+                            insert_query = "INSERT INTO customer (account_number, name, amount, PAN) VALUES (%s, %s, %s, %s)"
+                            data = (account_number, name, amount, pan)
 
-                        # # Execute the SQL query
-                        # cursor.execute(insert_query, data)
-
+                            # Execute the SQL query
+                            # cursor.execute(insert_query, data) # Commented out due to absence of database connection
+                            print(filename, "Class_3:", "Data inserted successfully")
                     else:
                         print(filename, "Class_3:", "Invalid account number")
         print("\n")
-        index+=1
-                    
+        index += 1
