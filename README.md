@@ -28,6 +28,10 @@ We are able to process multi lingual languages like hindi, english, tamil, etc u
 9) All the details are stored in the database and are continuously updated.
 10) For auditing, we provide feature of generating QR code for the generated text OCR, to prevent tampering.
 
+## Demonstation Video
+The demo video is uploaded as ChequeVissionApp.mp4 in the Video & PPT folder.
+
+
 ## How to run
 NameInCheque.py - Change the "main_directory" to the path of your file.
 sigext.py - Run as the code is. Nothing to be changed.
