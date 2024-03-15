@@ -14,7 +14,7 @@ We are able to process multi lingual languages like hindi, english, tamil, etc u
 6. Detecting Fraud
 7. Testing and Improvement
 
-<p align="center"><img src ="doc/imgs/cheuqedum.png?raw=true" height="340" alt="Sublime's custom image" /></p>
+<p align="center"><img src ="doc/imgs/cheuqedum.jpeg?raw=true" height="340" alt="Sublime's custom image" /></p>
 
 ## Program Structure
 1) According to <a href = "https://rbidocs.rbi.org.in/rdocs/content/PDFs/SCFR220210.pdf">CTS-10 standard </a> we are clipping the region of interest from the cheques to reduce the noise and to improve the processing speed
@@ -32,10 +32,21 @@ We are able to process multi lingual languages like hindi, english, tamil, etc u
 
 ## Dependencies 
 pip install the following modules:
-
+    1. os
+    2. pytesseract
+    3. re
+    4. random
+    5. cv2
+    6. easyocr
+    7. ssl
+    8. mysql.connector
+    9. numpy
+    10. cosine_similarity
+    11. face_recognition
+    12. sklearn
 
 ## Dataset
-Retrieved from kaggle
+Retrieved dataset from kaggle.
 
 ## Accuracy
-
+The system is able to process 70-80% of the cheques including the rejected cheques.
