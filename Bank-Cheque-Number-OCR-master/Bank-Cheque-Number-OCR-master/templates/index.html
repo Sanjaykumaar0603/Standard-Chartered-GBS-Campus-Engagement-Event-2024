@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check OCR</title>
+    <style>
+       body {
+            background-color: powderblue; /* Set background color to blue */
+            display: flex;
+            flex-direction:column;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            min-height: 100vh; /* Full viewport height */
+            margin: 0; /* Remove default margin */
+            padding: 0; /* Remove default padding */
+        }
+        .container {
+            text-align: center; /* Center form elements */
+            background-color: white; /* Set form background color to white */
+            padding: 20px;
+            border-radius: 10px;
+        }
+        #preview {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    
+        <h1>Welcome to <i>Cheque Reader</i></h1>
+        <div class="container">
+        <div class="upload-form">
+            <form action="/upload" method="post" enctype="multipart/form-data" id="ocr-form">
+            	<label for="file"><b>Upload Cheque Image:</b></label><br><br>
+                <input type="file" name="file" id="file">
+                <input type="submit" value="Upload">
+            </form>
+        </div>
+        <div id="preview">
+            <h2>Uploaded Image Preview</h2>
+            <img id="image-preview" src="#" alt="Uploaded Image">
+        </div>
+        <div class="result" id="result" style="display: none;">
+            <h2>OCR Result</h2>
+            <p id="cheque-number">Cheque Number:</p>
+            <p id="machine-code">Machine Code:</p>
+            <p id="account-info">Account Information:</p>
+            <p id="total-amount">Total Check Amount:</p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('file').addEventListener('change', function() {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('image-preview').setAttribute('src', e.target.result);
+                document.getElementById('preview').style.display = 'block';
+            }
+            reader.readAsDataURL(this.files[0]);
+        });
+
+        document.getElementById('ocr-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('cheque-number').innerText = 'Cheque Number: ' + data.cn;
+                document.getElementById('machine-code').innerText = 'MICR Code: ' + data.mc;
+                document.getElementById('account-info').innerText = 'Account Id: ' + data.ai;
+                document.getElementById('total-amount').innerText = 'Translational Code: ' + data.tc;
+                document.getElementById('result').style.display = 'block';
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
