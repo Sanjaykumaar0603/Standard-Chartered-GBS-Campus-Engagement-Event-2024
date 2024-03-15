@@ -47,6 +47,10 @@ pip install the following modules:
 
 ## Dataset
 Retrieved dataset from kaggle.
+<a href = "https://www.kaggle.com/datasets/74caca03d8d6a1e3ec07f412cc6f5594ab2961fddcdc210d0215aee5589e985b/data?select=object-detection.pbtxt"> Kaggle Dataset </a>
+
+We have implemented the ROI detection using ML models like pytorch, but due to the lack of datasets, the AI might sometimes crop inaccurately.
+
 
 ## Accuracy
 The system is able to process 70-80% of the cheques including the rejected cheques.
