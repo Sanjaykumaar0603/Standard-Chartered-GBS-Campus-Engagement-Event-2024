@@ -1,5 +1,9 @@
 # Standard-Chartered-GBS-Campus-Engagement-Event-2024
 
+##Introduction
+We are able to process multi lingual languages like hindi, english, tamil, etc using tesseract OCR
+<a href>Link for Tesseract OCR</a>
+
 ## OBJECTIVE:
 
 1. Reading Cheque Information (OCR)
@@ -10,8 +14,10 @@
 6. Detecting Fraud
 7. Testing and Improvement
 
+<p align="center"><img src ="doc/imgs/cheuqedum.png?raw=true" height="340" alt="Sublime's custom image" /></p>
+
 ## Program Structure
-1) According to CTS-10 standard we are clipping the region of interest from the cheques to reduce the noise and to improve the processing speed
+1) According to <a href = "https://rbidocs.rbi.org.in/rdocs/content/PDFs/SCFR220210.pdf">CTS-10 standard </a> we are clipping the region of interest from the cheques to reduce the noise and to improve the processing speed
 2) We are using tesseract OCR for recognizing printed text(such as Bank Name, Account number, Bank Details etc.) in the cheque image.
 3) we are utilizing Histogram of Oriented Gradients (HOG) descriptors and cosine similarity for feature extraction and comparison, respectively, to detect and authenticate signatures in bank cheque images.
 4) We are using easyocr for recognizing handwriting and digits to get the Reciever's name, amount, date.
@@ -21,4 +27,14 @@
 8) If the cheque is valid, then the information is printed else it is rejected if it meets any one of the fraudulent criteria,.
 9) All the details are stored in the database and are continuously updated.
 10) For auditing, we provide feature of generating QR code for the generated text OCR, to prevent tampering.
+
+## How to run
+
+## Dependencies 
+pip
+
+## Dataset
+Retrieved from kaggle
+
+## Accuracy
 
