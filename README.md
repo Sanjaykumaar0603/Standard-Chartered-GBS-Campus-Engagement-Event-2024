@@ -4,6 +4,10 @@
 ## Demonstation Video
 The demo video is uploaded as ChequeVissionApp.mp4 in the Video & PPT folder. Click on "View Raw" to download and view the video.
 
+![Screenshot 2024-03-15 155529](https://github.com/Sanjaykumaar0603/Standard-Chartered-GBS-Campus-Engagement-Event-2024/assets/96214556/4cb1a5ff-0296-45b6-8cd1-0b79de11e3ef)
+![Screenshot 2024-03-15 155538](https://github.com/Sanjaykumaar0603/Standard-Chartered-GBS-Campus-Engagement-Event-2024/assets/96214556/37d77774-f9e7-4ba5-95e4-5a9c5a7c63ef)
+![Screenshot 2024-03-15 155518](https://github.com/Sanjaykumaar0603/Standard-Chartered-GBS-Campus-Engagement-Event-2024/assets/96214556/5a42e3d8-2718-448c-86c5-e569259edefd)
+
 
 ## Introduction
 We are able to process multi lingual languages like hindi, english, tamil, etc using tesseract OCR
