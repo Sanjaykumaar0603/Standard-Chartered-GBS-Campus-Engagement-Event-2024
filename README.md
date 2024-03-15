@@ -31,7 +31,8 @@ We are able to process multi lingual languages like hindi, english, tamil, etc u
 ## How to run
 
 ## Dependencies 
-pip
+pip install the following modules:
+
 
 ## Dataset
 Retrieved from kaggle
