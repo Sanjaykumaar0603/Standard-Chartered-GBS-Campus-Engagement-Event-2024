@@ -1,6 +1,11 @@
 # Standard-Chartered-GBS-Campus-Engagement-Event-2024
 
-##Introduction
+
+## Demonstation Video
+The demo video is uploaded as ChequeVissionApp.mp4 in the Video & PPT folder. Click on "View Raw" to download and view the video.
+
+
+## Introduction
 We are able to process multi lingual languages like hindi, english, tamil, etc using tesseract OCR
 <a href>Link for Tesseract OCR</a>
 
@@ -27,9 +32,6 @@ We are able to process multi lingual languages like hindi, english, tamil, etc u
 8) If the cheque is valid, then the information is printed else it is rejected if it meets any one of the fraudulent criteria,.
 9) All the details are stored in the database and are continuously updated.
 10) For auditing, we provide feature of generating QR code for the generated text OCR, to prevent tampering.
-
-## Demonstation Video
-The demo video is uploaded as ChequeVissionApp.mp4 in the Video & PPT folder.
 
 
 ## How to run
