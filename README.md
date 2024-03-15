@@ -14,7 +14,7 @@ We are able to process multi lingual languages like hindi, english, tamil, etc u
 6. Detecting Fraud
 7. Testing and Improvement
 
-<p align="center"><img src ="doc/imgs/cheuqedum.jpeg?raw=true" height="340" alt="Sublime's custom image" /></p>
+<p align="center"><img src ="https://repository-images.githubusercontent.com/273438480/c3235400-c851-11ea-9011-4c77828502cf" height="340" alt="Sublime's custom image" /></p>
 
 ## Program Structure
 1) According to <a href = "https://rbidocs.rbi.org.in/rdocs/content/PDFs/SCFR220210.pdf">CTS-10 standard </a> we are clipping the region of interest from the cheques to reduce the noise and to improve the processing speed
