@@ -29,6 +29,11 @@ We are able to process multi lingual languages like hindi, english, tamil, etc u
 10) For auditing, we provide feature of generating QR code for the generated text OCR, to prevent tampering.
 
 ## How to run
+NameInCheque.py - Change the "main_directory" to the path of your file.
+sigext.py - Run as the code is. Nothing to be changed.
+Bank_AcctNo_OCR.py - Change the "directory" and "image_path" to the path of you file.
+databasecheck.py - Provide the cheque number and account number as parameters. Requires databases of all the accepted and stoped cheques.
+
 
 ## Dependencies 
 pip install the following modules:
@@ -54,3 +59,4 @@ We have implemented the ROI detection using ML models like pytorch, but due to t
 
 ## Accuracy
 The system is able to process 70-80% of the cheques including the rejected cheques.
+False positives for names handwriting detection is 250 words out of 750 words.
